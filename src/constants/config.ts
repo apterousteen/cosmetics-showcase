@@ -6,3 +6,6 @@ export const CSV_URL =
 
 /** Колонки сетки по брейкпоинтам (этап 6, подкрутить вживую). */
 export const GRID_COLS = { base: 2, sm: 4, lg: 6 };
+
+/** Таймаут запроса CSV, мс (по истечении — «ошибка сети»). */
+export const REQUEST_TIMEOUT_MS = 8000;

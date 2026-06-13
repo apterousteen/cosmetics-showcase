@@ -1,11 +1,39 @@
+import Papa from 'papaparse';
+import { CSV_URL } from '../constants/config';
 import type { Product } from './types';
 
+/** Сырая строка CSV: ключи — заголовки колонок. */
+type RawRow = Record<string, string>;
+
 /**
- * Слой данных (ТЗ §6). Этап 2:
- * fetch CSV -> PapaParse -> нормализация -> отсев мусора -> Product[].
- * Пока заглушка.
+ * Загружает и нормализует товары из опубликованного Google-CSV.
+ *
+ * Колонки сопоставляются по имени заголовка (не по индексу), поэтому перестановка столбцов в таблице парсинг не ломает.
+ * Все значения тримятся, строки без названия отсекаются.
+ *
+ * @param signal - сигнал отмены/таймаута
+ * @returns массив товаров; пустой [], если строк нет
+ * @throws при отмене, таймауте, сетевом сбое или HTTP-статусе ≠ 2xx
  */
-export async function fetchProducts(): Promise<Product[]> {
-  // TODO(этап 2): реализовать загрузку и парсинг CSV.
-  return [];
+export async function fetchProducts(signal?: AbortSignal): Promise<Product[]> {
+  const res = await fetch(CSV_URL, { signal });
+  if (!res.ok) {
+    throw new Error(`CSV fetch failed: ${res.status}`);
+  }
+  const text = await res.text();
+
+  const { data } = Papa.parse<RawRow>(text, {
+    header: true,
+    skipEmptyLines: true,
+  });
+
+  return data
+    .map((row) => ({
+      category: (row['Категория'] ?? '').trim(),
+      name: (row['Название'] ?? '').trim(),
+      price: (row['Примерная цена'] ?? '').trim(),
+      comment: (row['Комментарий'] ?? '').trim(),
+      imageURL: (row['imageURL'] ?? '').trim(),
+    }))
+    .filter((product) => product.name !== '');
 }
