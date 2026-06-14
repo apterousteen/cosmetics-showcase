@@ -4,6 +4,8 @@ export const texts = {
   title: 'Витрина топовой косметики',
   filterPlaceholder: 'Категории',
   counter: (shown: number, total: number) => `Показано ${shown} из ${total}`,
+  imageFallback: 'Картинки нет: работает VPN\nили просто не повезло',
+  copied: 'Скопировано',
   error: {
     timeout: {
       title: 'Сервер долго не отвечает',
