@@ -44,8 +44,7 @@ export function useProducts() {
       setState({ status: 'ready', products });
     } catch (error) {
       if (controller.signal.aborted) return; // ручная отмена — игнор
-      const isTimeout =
-        error instanceof DOMException && error.name === 'TimeoutError';
+      const isTimeout = error instanceof DOMException && error.name === 'TimeoutError';
       setState({ status: 'error', reason: isTimeout ? 'timeout' : 'network' });
       console.error(error);
     }
