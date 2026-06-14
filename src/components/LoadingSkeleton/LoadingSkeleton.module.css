@@ -1,0 +1,13 @@
+/* Те же параметры, что у ProductCard, чтобы layout не прыгал */
+.card {
+  height: 100%;
+  border-radius: var(--mantine-radius-xl);
+  padding: var(--mantine-spacing-lg);
+}
+
+.cropFade {
+  flex: 1;
+  min-block-size: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, black calc(100% - 120px), transparent);
+}
