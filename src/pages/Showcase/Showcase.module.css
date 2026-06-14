@@ -1,0 +1,13 @@
+/* 2 * spacing-lg — паддинги Container в App */
+.fitViewport {
+  display: flex;
+  flex-direction: column;
+  block-size: calc(100dvh - 2 * var(--mantine-spacing-lg));
+}
+
+.cropFade {
+  flex: 1;
+  min-block-size: 0; /* иначе flex не даёт overflow сжать контент */
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, black calc(100% - 120px), transparent);
+}
