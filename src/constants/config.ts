@@ -12,3 +12,6 @@ export const GRID_COLS = { base: 1, sm: 2, lg: 4 };
 
 /** Таймаут запроса CSV, мс (по истечении — «ошибка сети»). */
 export const REQUEST_TIMEOUT_MS = 8000;
+
+/** Таймаут загрузки картинки товара, мс (по истечении — плашка-фолбек). */
+export const IMAGE_TIMEOUT_MS = 5000;

@@ -1,12 +1,15 @@
 import { Badge, Card, Center, CopyButton, Group, Stack, Text, Tooltip } from '@mantine/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Product } from '../../api/types';
+import { IMAGE_TIMEOUT_MS } from '../../constants/config';
 import { texts } from '../../constants/texts';
 import classes from './ProductCard.module.css';
 
 type ProductCardProps = {
   product: Product;
 };
+
+type ImageStatus = 'loading' | 'loaded' | 'broken';
 
 /**
  * Карточка товара: фото, название, комментарий, цена, бейдж.
@@ -16,9 +19,16 @@ type ProductCardProps = {
  */
 export function ProductCard({ product }: ProductCardProps) {
   const { name, comment, price, category, imageURL } = product;
-  // Картинки часто не отдаются (российские CDN + VPN) — ловим onError
-  const [imageBroken, setImageBroken] = useState(false);
-  const showImage = imageURL !== '' && !imageBroken;
+  // Картинки часто не отдаются (российские CDN + VPN)
+  // битые/висящие картинки → фолбек (onError + таймаут)
+  const [imageStatus, setImageStatus] = useState<ImageStatus>('loading');
+  const showImage = imageURL !== '' && imageStatus !== 'broken';
+
+  useEffect(() => {
+    if (!showImage || imageStatus === 'loaded') return;
+    const id = setTimeout(() => setImageStatus('broken'), IMAGE_TIMEOUT_MS);
+    return () => clearTimeout(id);
+  }, [showImage, imageStatus]);
 
   return (
     <Card withBorder className={classes.card}>
@@ -27,9 +37,9 @@ export function ProductCard({ product }: ProductCardProps) {
           <img
             src={imageURL}
             alt={name}
-            loading="lazy"
             className={classes.image}
-            onError={() => setImageBroken(true)}
+            onLoad={() => setImageStatus('loaded')}
+            onError={() => setImageStatus('broken')}
           />
         ) : (
           <Center className={classes.imageFallback}>
