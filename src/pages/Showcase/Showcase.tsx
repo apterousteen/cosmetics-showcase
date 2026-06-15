@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { CardsGrid } from '../../components/CardsGrid/CardsGrid';
 import { LoadingSkeleton } from '../../components/LoadingSkeleton/LoadingSkeleton';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
+import { ScrollTopButton } from '../../components/ScrollTopButton/ScrollTopButton';
 import { StatusMessage } from '../../components/StatusMessage/StatusMessage';
 import { texts } from '../../constants/texts';
 import { useProducts } from '../../hooks/useProducts';
@@ -53,6 +54,7 @@ export function Showcase() {
         {texts.subtitle}
       </Text>
       {loading ? <div className={classes.cropFade}>{content}</div> : content}
+      <ScrollTopButton />
     </div>
   );
 }
