@@ -6,9 +6,7 @@ type CardsGridProps = {
   children: ReactNode;
 };
 
-/**
- * Адаптивная сетка карточек для товаров и скелетонов.
- */
+/** Адаптивная сетка карточек для товаров и скелетонов. */
 export function CardsGrid({ children }: CardsGridProps) {
   return (
     <SimpleGrid spacing="md" cols={GRID_COLS}>

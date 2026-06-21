@@ -3,10 +3,10 @@ import { fetchProducts } from '../api/fetchProducts';
 import type { Product } from '../api/types';
 import { REQUEST_TIMEOUT_MS } from '../constants/config';
 
-/** Причина провала загрузки для разных сообщений в UI */
+/** Причина провала загрузки для разных сообщений в UI. */
 export type ProductsError = 'timeout' | 'network';
 
-/** Состояние загрузки данных */
+/** Состояние загрузки данных. */
 export type ProductsState =
   | { status: 'loading' }
   | { status: 'error'; reason: ProductsError }

@@ -2,12 +2,10 @@ import { Card, Group, Skeleton, Stack } from '@mantine/core';
 import { CardsGrid } from '../CardsGrid/CardsGrid';
 import classes from './LoadingSkeleton.module.css';
 
-/** С запасом: лишние ряды обрежет обёртка div.cropFade в Showcase, точное число не важно */
+/** С запасом: лишние ряды обрежет обёртка div.cropFade в Showcase, точное число не важно. */
 const MAX_SKELETONS = 24;
 
-/**
- * Скелетон экрана загрузки: заглушка фильтра + сетка карточек под вид {@link ProductCard}.
- */
+/** Скелетон экрана загрузки: заглушка фильтра + сетка карточек под вид {@link ProductCard}. */
 export function LoadingSkeleton() {
   return (
     <>
