@@ -6,4 +6,6 @@ export type Product = {
   price: string;
   comment: string;
   imageURL: string;
+  /** Имя Mantine-цвета для гаммы карточки (по умолчанию pink). */
+  mantineColorBg: string;
 };

@@ -14,6 +14,7 @@ export function ScrollTopButton() {
         {(styles) => (
           <ActionIcon
             style={styles}
+            color="gray"
             size="xl"
             radius="lg"
             aria-label="Наверх"

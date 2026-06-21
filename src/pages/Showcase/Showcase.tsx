@@ -43,7 +43,7 @@ export function Showcase() {
     content = (
       <>
         <CategoryFilter categories={categories} value={selected} onChange={setSelected} />
-        <Text c="dimmed" size="sm" mb="lg">
+        <Text size="sm" mb="lg">
           {texts.counter(filtered.length, products.length)}
         </Text>
         {filtered.length > 0 ? (
@@ -69,9 +69,7 @@ export function Showcase() {
       <Title order={1} size={28} mb="xs">
         {texts.title}
       </Title>
-      <Text c="dimmed" mb="lg">
-        {texts.subtitle}
-      </Text>
+      <Text mb="lg">{texts.subtitle}</Text>
       {loading ? <div className={classes.cropFade}>{content}</div> : content}
       <ScrollTopButton />
     </div>
