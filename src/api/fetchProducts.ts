@@ -9,7 +9,7 @@ type RawRow = Record<string, string>;
  * Загружает и нормализует товары из опубликованного Google-CSV.
  *
  * Колонки сопоставляются по имени заголовка (не по индексу), поэтому перестановка столбцов в таблице парсинг не ломает.
- * Все значения тримятся, строки без названия отсекаются.
+ * Все значения тримятся, строки без id отсекаются.
  *
  * @param signal - сигнал отмены/таймаута
  * @returns массив товаров; пустой [], если строк нет
@@ -29,11 +29,12 @@ export async function fetchProducts(signal?: AbortSignal): Promise<Product[]> {
 
   return data
     .map((row) => ({
-      category: (row['Категория'] ?? '').trim(),
-      name: (row['Название'] ?? '').trim(),
-      price: (row['Примерная цена'] ?? '').trim(),
-      comment: (row['Комментарий'] ?? '').trim(),
+      id: (row['id'] ?? '').trim(),
+      category: (row['category'] ?? '').trim(),
+      name: (row['name'] ?? '').trim(),
+      price: (row['approximatePrice'] ?? '').trim(),
+      comment: (row['comment'] ?? '').trim(),
       imageURL: (row['imageURL'] ?? '').trim(),
     }))
-    .filter((product) => product.name !== '');
+    .filter((product) => product.id !== '');
 }
