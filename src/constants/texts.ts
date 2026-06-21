@@ -27,4 +27,5 @@ export const texts = {
     description: 'Попробуй поменять фильтры',
   },
   retry: 'Повторить',
+  footer: 'Made with love 💜 and Claude Opus 4.8',
 };
