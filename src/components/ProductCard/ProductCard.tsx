@@ -20,7 +20,7 @@ type ImageStatus = 'loading' | 'loaded' | 'broken';
  */
 export function ProductCard({ product }: ProductCardProps) {
   const { name, comment, price, category, imageURL, mantineColorBg } = product;
-  const { color, style } = resolveCardColors(mantineColorBg);
+  const { color, badgeBg, style } = resolveCardColors(mantineColorBg);
   // Картинки часто не отдаются (российские CDN + VPN)
   // битые/висящие картинки → фолбек (onError + таймаут)
   const [imageStatus, setImageStatus] = useState<ImageStatus>('loading');
@@ -72,7 +72,12 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
         <Group justify="space-between" align="center" mt="auto">
           {price && <Text fw={600}>≈ {price} ₽</Text>}
-          <Badge color={color} fw={600} variant="light">
+          <Badge
+            color={color}
+            fw={600}
+            variant="light"
+            style={badgeBg ? { backgroundColor: badgeBg } : undefined}
+          >
             {category}
           </Badge>
         </Group>
