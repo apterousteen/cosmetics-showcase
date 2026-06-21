@@ -1,6 +1,12 @@
 .card {
-  background-color: var(--mantine-color-pink-0);
-  border-color: var(--mantine-color-pink-1);
+  /* Дефолты гаммы (pink); resolveCardColors переопределяет их inline-стилем. */
+  --card-bg: var(--mantine-color-pink-0);
+  --card-shade: var(--mantine-color-pink-1);
+  --card-text: var(--mantine-color-pink-9);
+
+  background-color: var(--card-bg);
+  border-color: var(--card-shade);
+  color: var(--card-text);
   height: 100%;
   border-radius: var(--mantine-radius-xl);
   padding: var(--mantine-spacing-lg);
@@ -28,8 +34,9 @@
   height: 100%;
   padding: var(--mantine-spacing-md);
   border-radius: 24px;
-  background-color: var(--mantine-color-pink-1);
-  color: var(--mantine-color-pink-9);
+  /* В тон карточке: -1 фон, -9 текст из гаммы (resolveCardColors). */
+  background-color: var(--card-shade);
+  color: var(--card-text);
   text-align: center;
   white-space: pre-line;
 }

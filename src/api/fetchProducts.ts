@@ -35,6 +35,7 @@ export async function fetchProducts(signal?: AbortSignal): Promise<Product[]> {
       price: (row['approximatePrice'] ?? '').trim(),
       comment: (row['comment'] ?? '').trim(),
       imageURL: (row['imageURL'] ?? '').trim(),
+      mantineColorBg: (row['mantineColorBg'] ?? '').trim(),
     }))
     .filter((product) => product.id !== '');
 }

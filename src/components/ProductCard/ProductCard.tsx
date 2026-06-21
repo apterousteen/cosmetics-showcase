@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import type { Product } from '../../api/types';
 import { IMAGE_TIMEOUT_MS } from '../../constants/config';
 import { texts } from '../../constants/texts';
+import { resolveCardColors } from '../../utils/resolveCardColors';
 import classes from './ProductCard.module.css';
 
 type ProductCardProps = {
@@ -18,7 +19,8 @@ type ImageStatus = 'loading' | 'loaded' | 'broken';
  * - Нажатие названия копирует категорию и название.
  */
 export function ProductCard({ product }: ProductCardProps) {
-  const { name, comment, price, category, imageURL } = product;
+  const { name, comment, price, category, imageURL, mantineColorBg } = product;
+  const { color, style } = resolveCardColors(mantineColorBg);
   // Картинки часто не отдаются (российские CDN + VPN)
   // битые/висящие картинки → фолбек (onError + таймаут)
   const [imageStatus, setImageStatus] = useState<ImageStatus>('loading');
@@ -31,7 +33,7 @@ export function ProductCard({ product }: ProductCardProps) {
   }, [showImage, imageStatus]);
 
   return (
-    <Card withBorder className={classes.card}>
+    <Card withBorder className={classes.card} style={style}>
       <Card.Section className={classes.imageWrapper}>
         {showImage ? (
           <img
@@ -70,7 +72,7 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
         <Group justify="space-between" align="center" mt="auto">
           {price && <Text fw={600}>≈ {price} ₽</Text>}
-          <Badge color="pink" fw={600} variant="light">
+          <Badge color={color} fw={600} variant="light">
             {category}
           </Badge>
         </Group>
