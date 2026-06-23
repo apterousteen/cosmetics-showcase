@@ -1,73 +1,35 @@
-# React + TypeScript + Vite
+# Витрина топового косметоса 💜
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+— то, что хочется купить второй раз
 
-Currently, two official plugins are available:
+Дата создания: 06.2026
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Ссылка: https://apterousteen.github.io/cosmetics-showcase
 
-## React Compiler
+## Возможности
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- каталог товаров с фото, примерной ценой, категорией и личным комментарием
+- фильтр по категориям (мультиселект + поиск)
+- копирование названия товара по нажатию
+- динамический цвет карточек
 
-## Expanding the ESLint configuration
+## Зачем и как
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Proof of concept: собрать живой сайт-каталог без админки, бэкенда и базы данных.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Роль БД играет публичная Google-таблица. Сайт берёт данные через [gviz-эндпоинт](https://developers.google.com/chart/interactive/docs/querylanguage) в формате CSV. Их мало, так что фильтрация на клиенте.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Чтобы добавить или поправить запись, я просто редактирую таблицу: деплой не нужен.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Стек
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- React + Vite + TypeScript
+- [Mantine](https://mantine.dev/) — UI
+- [PapaParse](https://www.papaparse.com/) — парсинг CSV
+- [Biome](https://biomejs.dev/) — линт/формат
+- GitHub Pages — хостинг
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Скриншоты
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+<img src="#" alt="desktop" width="77%">
+<img src="#" alt="mobile" width="21.74%">
