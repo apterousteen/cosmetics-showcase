@@ -1,4 +1,4 @@
-/** Источник данных и настройки сетки (ТЗ §3.3, §4.7). */
+/** Источник данных и настройки сетки. */
 
 /** ID Google-таблицы и имя листа. */
 export const SPREADSHEET_ID = '1TJYya22wVhmdhmQi4LtsxoNUKgDS9GlCuwiakYOuVSQ';

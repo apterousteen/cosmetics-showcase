@@ -1,4 +1,4 @@
-/** Все тексты UI в одном месте (ТЗ §4.5). */
+/** Все тексты UI в одном месте. */
 
 export const texts = {
   title: 'Витрина топового косметоса 💅🏻',
@@ -27,4 +27,5 @@ export const texts = {
     description: 'Попробуй поменять фильтры',
   },
   retry: 'Повторить',
+  footer: 'Made with love 💜 and Claude Opus 4.8',
 };

@@ -1,8 +1,21 @@
-/* 2 * spacing-lg — паддинги Container в App */
+/* Колонка во всю высоту экрана, чтобы футер прибивался к низу. */
+/* 2 * spacing-lg — паддинги Container в App. */
+.page {
+  display: flex;
+  flex-direction: column;
+  min-block-size: calc(100dvh - 2 * var(--mantine-spacing-lg));
+}
+
+/* Загрузка: фиксируем высоту (а не min), чтобы cropFade обрезал лишние ряды. */
 .fitViewport {
   display: flex;
   flex-direction: column;
   block-size: calc(100dvh - 2 * var(--mantine-spacing-lg));
+}
+
+/* Прибивает футер к низу. */
+.footer {
+  margin-block-start: auto;
 }
 
 .cropFade {

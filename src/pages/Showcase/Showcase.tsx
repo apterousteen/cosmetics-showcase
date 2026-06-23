@@ -65,12 +65,24 @@ export function Showcase() {
    скелетоны обрезаются фейдом, чтобы не было скролла из пустых рядов
    */
   return (
-    <div className={loading ? classes.fitViewport : undefined}>
+    <div className={loading ? classes.fitViewport : classes.page}>
       <Title order={1} size={28} mb="xs">
         {texts.title}
       </Title>
       <Text mb="lg">{texts.subtitle}</Text>
       {loading ? <div className={classes.cropFade}>{content}</div> : content}
+      {!loading && (
+        <Text
+          component="footer"
+          c="dimmed"
+          size="sm"
+          ta="center"
+          className={classes.footer}
+          pt="md"
+        >
+          {texts.footer}
+        </Text>
+      )}
       <ScrollTopButton />
     </div>
   );

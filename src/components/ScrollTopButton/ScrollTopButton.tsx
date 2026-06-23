@@ -2,9 +2,7 @@ import { ActionIcon, Affix, Transition } from '@mantine/core';
 import { useWindowScroll } from '@mantine/hooks';
 import { ArrowUp } from 'lucide-react';
 
-/**
- * Появляется при прокрутке вниз, по клику плавно возвращает к началу страницы.
- * */
+/** Появляется при прокрутке вниз, по клику плавно возвращает к началу страницы. */
 export function ScrollTopButton() {
   const [scroll, scrollTo] = useWindowScroll();
 
