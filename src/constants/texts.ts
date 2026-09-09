@@ -26,6 +26,11 @@ export const texts = {
     title: 'Ничего не нашлось',
     description: 'Попробуй поменять фильтры',
   },
+  notFound: {
+    title: 'Такой страницы нет',
+    description: 'Ссылка битая или устарела',
+  },
+  toShowcase: 'К витрине',
   retry: 'Повторить',
   footer: 'Made with love 💜 and Claude Opus 4.8',
 };
