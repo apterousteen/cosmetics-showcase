@@ -1,6 +1,5 @@
 import { Text, Title } from '@mantine/core';
 import type { ReactNode } from 'react';
-import type { Product } from '../../api/types';
 import { CardsGrid } from '../../components/CardsGrid/CardsGrid';
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter';
 import { LoadingSkeleton } from '../../components/LoadingSkeleton/LoadingSkeleton';
@@ -8,21 +7,13 @@ import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { ScrollTopButton } from '../../components/ScrollTopButton/ScrollTopButton';
 import { StatusMessage } from '../../components/StatusMessage/StatusMessage';
 import { texts } from '../../constants/texts';
-import { useCategoryFilter } from '../../hooks/useCategoryFilter';
-import { useProducts } from '../../hooks/useProducts';
+import { useCatalog } from '../../context/CatalogContext';
 import classes from './Showcase.module.css';
 
-// Стабильная ссылка, чтобы useMemo в useCategoryFilter не пересчитывался
-const NO_PRODUCTS: Product[] = [];
-
-/**
- * Главный экран: шапка + контент по состоянию
- * (загрузка / ошибка / нет данных / список товаров).
- */
+/** Страница витрины: список товаров с фильтром по категориям. */
 export function Showcase() {
-  const { state, retry } = useProducts();
-  const products = state.status === 'ready' ? state.products : NO_PRODUCTS;
-  const { categories, selected, setSelected, filtered } = useCategoryFilter(products);
+  const { state, retry, products, categories, selected, setSelected, filteredProducts } =
+    useCatalog();
 
   const loading = state.status === 'loading';
   let content: ReactNode;
@@ -44,11 +35,11 @@ export function Showcase() {
       <>
         <CategoryFilter categories={categories} value={selected} onChange={setSelected} />
         <Text size="sm" mb="lg">
-          {texts.counter(filtered.length, products.length)}
+          {texts.counter(filteredProducts.length, products.length)}
         </Text>
-        {filtered.length > 0 ? (
+        {filteredProducts.length > 0 ? (
           <CardsGrid>
-            {filtered.map((product) => (
+            {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </CardsGrid>

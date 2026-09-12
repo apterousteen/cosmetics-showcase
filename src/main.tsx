@@ -5,6 +5,7 @@ import { MantineProvider } from '@mantine/core';
 import { Router } from 'wouter';
 import './index.css';
 import App from './App.tsx';
+import { CatalogProvider } from './context/CatalogContext.tsx';
 import { theme } from './theme.ts';
 
 // BASE_URL берём из Vite.
@@ -15,7 +16,9 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <MantineProvider theme={theme}>
       <Router base={BASE}>
-        <App />
+        <CatalogProvider>
+          <App />
+        </CatalogProvider>
       </Router>
     </MantineProvider>
   </StrictMode>,
