@@ -12,6 +12,7 @@ type CatalogContextValue = {
   selected: string[];
   setSelected: (next: string[]) => void;
   filteredProducts: Product[];
+  updatedAt: number;
 };
 
 const CatalogContext = createContext<CatalogContextValue | null>(null);
@@ -21,13 +22,22 @@ const NO_PRODUCTS: Product[] = [];
 
 /** Располагается выше App c маршрутами, чтобы переход между страницами не запрашивал товары заново и не терял фильтры. */
 export function CatalogProvider({ children }: { children: ReactNode }) {
-  const { state, retry } = useProducts();
+  const { state, retry, updatedAt } = useProducts();
   const products = state.status === 'ready' ? state.products : NO_PRODUCTS;
   const { categories, selected, setSelected, filteredProducts } = useCategoryFilter(products);
 
   const value = useMemo(
-    () => ({ state, retry, products, categories, selected, setSelected, filteredProducts }),
-    [state, retry, products, categories, selected, setSelected, filteredProducts],
+    () => ({
+      state,
+      retry,
+      products,
+      categories,
+      selected,
+      setSelected,
+      filteredProducts,
+      updatedAt,
+    }),
+    [state, retry, products, categories, selected, setSelected, filteredProducts, updatedAt],
   );
 
   return <CatalogContext value={value}>{children}</CatalogContext>;

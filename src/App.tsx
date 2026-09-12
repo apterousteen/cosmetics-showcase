@@ -1,5 +1,6 @@
 import { Container } from '@mantine/core';
 import { Route, Switch } from 'wouter';
+import { DataUpdatedNotification } from './components/DataUpdatedNotification/DataUpdatedNotification';
 import { NotFound } from './pages/NotFound/NotFound';
 import { Showcase } from './pages/Showcase/Showcase';
 
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" component={Showcase} />
         <Route component={NotFound} />
       </Switch>
+      <DataUpdatedNotification />
     </Container>
   );
 }

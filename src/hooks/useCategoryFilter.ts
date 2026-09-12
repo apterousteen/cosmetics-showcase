@@ -2,27 +2,31 @@ import { useMemo, useState } from 'react';
 import type { Product } from '../api/types';
 
 /**
- * Фильтрация товаров по категориям.
+ * Фильтрует товары по категориям, которые есть в данных.
  *
- * Категории выводятся из самих товаров (уникальные, по алфавиту).
- * Логика: пустой выбор → все товары, иначе — товары из выбранных категорий.
+ * Хранит весь выбор пользователя, а не только пересечение с реальными категориями, почему так см. в docs/internal/data.md.
  *
  * @param products - список товаров (источник категорий и данных для фильтра)
- * @returns categories - опции фильтра; selected/setSelected — выбор; filtered — отфильтрованные товары
+ * @returns categories - опции фильтра; selected/setSelected — выбранные опции; filteredProducts — отфильтрованные товары
  */
 export function useCategoryFilter(products: Product[]) {
-  const [selected, setSelected] = useState<string[]>([]);
+  const [chosenByUser, setChosenByUser] = useState<string[]>([]);
 
   const categories = useMemo(
     () => [...new Set(products.map((p) => p.category))].sort((a, b) => a.localeCompare(b)),
     [products],
   );
 
-  const filtered = useMemo(
+  const selected = useMemo(
+    () => chosenByUser.filter((category) => categories.includes(category)),
+    [chosenByUser, categories],
+  );
+
+  const filteredProducts = useMemo(
     () =>
       selected.length === 0 ? products : products.filter((p) => selected.includes(p.category)),
     [products, selected],
   );
 
-  return { categories, selected, setSelected, filtered };
+  return { categories, selected, setSelected: setChosenByUser, filteredProducts };
 }

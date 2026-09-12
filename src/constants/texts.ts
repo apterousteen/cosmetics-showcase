@@ -31,6 +31,7 @@ export const texts = {
     description: 'Ссылка битая или устарела',
   },
   toShowcase: 'К витрине',
+  dataUpdated: 'Данные обновились',
   retry: 'Повторить',
   footer: 'Made with love 💜 and Claude Opus 4.8',
 };
