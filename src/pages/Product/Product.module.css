@@ -1,0 +1,7 @@
+.page {
+  max-width: 760px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 2 * var(--mantine-spacing-lg));
+}

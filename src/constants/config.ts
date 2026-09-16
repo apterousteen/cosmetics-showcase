@@ -21,3 +21,6 @@ export const DATA_STALE_AFTER_MS = 5 * 60 * 1000;
 
 /** Длительность показа уведомления о фоновом обновлении данных, мс. */
 export const UPDATE_NOTIFICATION_MS = 5000;
+
+/** Длительность показа подсказки с итогом копирования ссылки, мс. */
+export const COPIED_TOOLTIP_MS = 1500;

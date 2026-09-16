@@ -8,12 +8,14 @@ import { ScrollTopButton } from '../../components/ScrollTopButton/ScrollTopButto
 import { StatusMessage } from '../../components/StatusMessage/StatusMessage';
 import { texts } from '../../constants/texts';
 import { useCatalog } from '../../context/CatalogContext';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import classes from './Showcase.module.css';
 
 /** Страница витрины: список товаров с фильтром по категориям. */
 export function Showcase() {
-  const { state, retry, products, categories, selected, setSelected, filteredProducts } =
-    useCatalog();
+  const { state, retry, products, categories, selected, setSelected, filteredProducts } = useCatalog();
+
+  useDocumentTitle(texts.siteTitle);
 
   const loading = state.status === 'loading';
   let content: ReactNode;
@@ -21,12 +23,7 @@ export function Showcase() {
   if (state.status === 'loading') {
     content = <LoadingSkeleton />;
   } else if (state.status === 'error') {
-    content = (
-      <StatusMessage
-        {...texts.error[state.reason]}
-        action={{ label: texts.retry, onClick: retry }}
-      />
-    );
+    content = <StatusMessage {...texts.error[state.reason]} action={{ label: texts.retry, onClick: retry }} />;
   } else if (products.length === 0) {
     content = <StatusMessage {...texts.noData} />;
   } else {
@@ -63,14 +60,7 @@ export function Showcase() {
       <Text mb="lg">{texts.subtitle}</Text>
       {loading ? <div className={classes.cropFade}>{content}</div> : content}
       {!loading && (
-        <Text
-          component="footer"
-          c="dimmed"
-          size="sm"
-          ta="center"
-          className={classes.footer}
-          pt="md"
-        >
+        <Text component="footer" c="dimmed" size="sm" ta="center" className={classes.footer} pt="md">
           {texts.footer}
         </Text>
       )}
