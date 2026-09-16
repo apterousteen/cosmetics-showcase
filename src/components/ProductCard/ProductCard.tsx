@@ -23,12 +23,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <Stack gap="xs" flex={1}>
         <CopyButton value={`${category} ${name}`}>
           {({ copied, copy }) => (
-            <Tooltip
-              position="top-start"
-              color="rgba(0, 0, 0, 0.7)"
-              label={texts.copied}
-              opened={copied}
-            >
+            <Tooltip position="top-start" color="rgba(0, 0, 0, 0.7)" label={texts.copied} opened={copied}>
               <Text size="lg" fw={600} lineClamp={3} style={{ cursor: 'pointer' }} onClick={copy}>
                 {name}
               </Text>
@@ -36,18 +31,13 @@ export function ProductCard({ product }: ProductCardProps) {
           )}
         </CopyButton>
         {comment && (
-          <Text size="md" c="dimmed" lineClamp={5}>
+          <Text size="md" c="var(--mantine-color-text)" lineClamp={5}>
             {comment}
           </Text>
         )}
         <Group justify="space-between" align="center" mt="auto">
           {price && <Text fw={600}>≈ {price} ₽</Text>}
-          <Badge
-            color={color}
-            fw={600}
-            variant="light"
-            style={badgeBg ? { backgroundColor: badgeBg } : undefined}
-          >
+          <Badge color={color} fw={600} variant="light" style={badgeBg ? { backgroundColor: badgeBg } : undefined}>
             {category}
           </Badge>
         </Group>
