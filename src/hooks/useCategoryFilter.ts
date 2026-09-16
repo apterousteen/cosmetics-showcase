@@ -23,8 +23,7 @@ export function useCategoryFilter(products: Product[]) {
   );
 
   const filteredProducts = useMemo(
-    () =>
-      selected.length === 0 ? products : products.filter((p) => selected.includes(p.category)),
+    () => (selected.length === 0 ? products : products.filter((p) => selected.includes(p.category))),
     [products, selected],
   );
 
