@@ -2,9 +2,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Значение задаёт родитель: карточка витрины, ряд соседей или страница товара. */
+  /* Значения задаёт родитель: карточка витрины, ряд соседей или страница товара. */
   height: var(--card-media-h, 200px);
-  padding: var(--mantine-spacing-sm);
+  padding: var(--card-media-p, var(--mantine-spacing-sm));
   overflow: hidden;
 }
 

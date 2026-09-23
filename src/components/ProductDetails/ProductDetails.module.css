@@ -1,7 +1,9 @@
 .card,
 .skeletonCard {
-  /* Высоту фото читает ProductImage; на странице товара оно крупнее, чем в карточке витрины. */
+  /* Размеры медиа читает ProductImage; на странице товара фото крупнее, чем в карточке витрины. */
   --card-media-h: 240px;
+  /* Своего отступа вокруг медиа не нужно: его уже даёт padding карточки. */
+  --card-media-p: 0;
 
   position: relative;
   border-radius: var(--mantine-radius-xl);
