@@ -12,6 +12,11 @@ import { theme } from './theme.ts';
 // wouter не принимает завершающий слэш в base, поэтому он обрезается.
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
+// Чтобы браузерное восстановление прокрутки не спорило с восстановлением по якорю карточки.
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <MantineProvider theme={theme}>

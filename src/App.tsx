@@ -11,7 +11,8 @@ function App() {
     <Container p="lg" fluid>
       <Switch>
         <Route path="/" component={Showcase} />
-        <Route path="/product/:id" component={Product} />
+        {/* Без key стейт залипнет и могут отобразиться данные прошлого товара. */}
+        <Route path="/product/:id">{({ id }) => <Product key={id} />}</Route>
         <Route component={NotFound} />
       </Switch>
       <DataUpdatedNotification />

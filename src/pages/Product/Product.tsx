@@ -1,5 +1,6 @@
 import { Button, Text } from '@mantine/core';
 import { ArrowLeft } from 'lucide-react';
+import { useLayoutEffect } from 'react';
 import { Link, useParams } from 'wouter';
 import { ProductDetails } from '../../components/ProductDetails/ProductDetails';
 import { ProductSkeleton } from '../../components/ProductSkeleton/ProductSkeleton';
@@ -14,6 +15,12 @@ import classes from './Product.module.css';
 export function Product() {
   const { id } = useParams<{ id: string }>();
   const { state, retry, products } = useCatalog();
+
+  // Чтобы товар не открывался на положении прокрутки витрины
+  // Пустых зависимостей ([]) хватает потому, что Product перемонтируется на каждом товаре.
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Товары общие для всех страниц: при переходе с витрины товар уже здесь, по прямой ссылке — только после загрузки.
   const product = products.find((item) => item.id === id);

@@ -12,3 +12,38 @@
   padding: var(--mantine-spacing-lg);
   overflow: hidden;
 }
+
+.imageLink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nameLink {
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.nameLink:hover,
+.nameLink:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: color-mix(in srgb, currentColor 60%, transparent);
+}
+
+/* --card-name-lines и --card-comment-lines задаёт обёртка карточки */
+/* Объявлять их на .card нельзя, это перебьёт унаследованное значение и сломает компактный вариант карточки. */
+.name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--card-name-lines, 3);
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.comment {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--card-comment-lines, 5);
+  overflow: hidden;
+}

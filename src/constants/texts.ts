@@ -12,6 +12,7 @@ export const texts = {
   imageFallback: 'Картинки нет: работает VPN\nили просто не повезло',
   copied: 'Скопировано',
   copyName: 'Скопировать название',
+  copyNameOf: (category: string, name: string) => `Скопировать название: ${category} ${name}`,
   share: 'Поделиться',
   linkCopied: 'Ссылка скопирована',
   linkCopyFailed: 'Не удалось скопировать ссылку',

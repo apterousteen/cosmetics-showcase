@@ -1,5 +1,5 @@
 import { Text, Title } from '@mantine/core';
-import type { ReactNode } from 'react';
+import { type ReactNode, useLayoutEffect } from 'react';
 import { CardsGrid } from '../../components/CardsGrid/CardsGrid';
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter';
 import { LoadingSkeleton } from '../../components/LoadingSkeleton/LoadingSkeleton';
@@ -9,6 +9,7 @@ import { StatusMessage } from '../../components/StatusMessage/StatusMessage';
 import { texts } from '../../constants/texts';
 import { useCatalog } from '../../context/CatalogContext';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import { forgetAnchor, getHistoryState } from '../../utils/history';
 import classes from './Showcase.module.css';
 
 /** Страница витрины: список товаров с фильтром по категориям. */
@@ -16,6 +17,20 @@ export function Showcase() {
   const { state, retry, products, categories, selected, setSelected, filteredProducts } = useCatalog();
 
   useDocumentTitle(texts.siteTitle);
+
+  // Зависимость только от статуса загрузки, а не от списка товаров, иначе фоновое обновление дёргало бы прокрутку.
+  useLayoutEffect(() => {
+    if (state.status !== 'ready') return;
+
+    const { anchorId } = getHistoryState();
+    if (anchorId === null) return;
+
+    const card = document.querySelector(`[data-product-id="${CSS.escape(anchorId)}"]`);
+    if (card === null) return;
+
+    card.scrollIntoView({ block: 'center' });
+    forgetAnchor();
+  }, [state.status]);
 
   const loading = state.status === 'loading';
   let content: ReactNode;
