@@ -19,7 +19,7 @@ type ProductCardProps = {
  */
 export function ProductCard({ product }: ProductCardProps) {
   const { id, name, comment, price, category, imageURL, mantineColorBg } = product;
-  const { color, badgeBg, style } = resolveCardColors(mantineColorBg);
+  const { color, style } = resolveCardColors(mantineColorBg);
   const [location] = useLocation();
 
   const href = `/product/${encodeURIComponent(id)}`;
@@ -44,23 +44,30 @@ export function ProductCard({ product }: ProductCardProps) {
       </Card.Section>
 
       <Stack gap="xs" flex={1}>
-        <Group gap={4} align="flex-start" wrap="nowrap">
+        <Text size="lg" fw={600} className={classes.name}>
           <Link href={href} state={{ from: location }} onClick={handleNavigate} className={classes.nameLink}>
-            <Text size="lg" fw={600} className={classes.name}>
-              {name}
-            </Text>
+            {name}
           </Link>
 
-          <CopyButton value={`${category} ${name}`}>
-            {({ copied, copy }) => (
-              <Tooltip position="top" color="rgba(0, 0, 0, 0.7)" label={texts.copied} opened={copied}>
-                <ActionIcon variant="subtle" color={color} aria-label={texts.copyNameOf(category, name)} onClick={copy}>
-                  {copied ? <Check size={16} /> : <Copy size={16} />}
-                </ActionIcon>
-              </Tooltip>
-            )}
-          </CopyButton>
-        </Group>
+          <span className={classes.copyGlue}>
+            {' '}
+            <CopyButton value={`${category} ${name}`}>
+              {({ copied, copy }) => (
+                <Tooltip position="top" color="gray.8" label={texts.copied} opened={copied}>
+                  <ActionIcon
+                    variant="subtle"
+                    size="md"
+                    color={color}
+                    aria-label={texts.copyNameOf(category, name)}
+                    onClick={copy}
+                  >
+                    {copied ? <Check size={14} /> : <Copy size={14} />}
+                  </ActionIcon>
+                </Tooltip>
+              )}
+            </CopyButton>
+          </span>
+        </Text>
 
         {comment && (
           <Text size="md" c="var(--mantine-color-text)" className={classes.comment}>
@@ -70,7 +77,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
         <Group justify="space-between" align="center" mt="auto">
           {price && <Text fw={600}>≈ {price} ₽</Text>}
-          <Badge color={color} fw={600} variant="light" style={badgeBg ? { backgroundColor: badgeBg } : undefined}>
+          <Badge color={color} fw={600} variant="light">
             {category}
           </Badge>
         </Group>

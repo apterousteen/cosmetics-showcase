@@ -18,7 +18,7 @@ type ShareNotification = 'copied' | 'failed';
 /** Крупный блок товара на его странице: фото, название, комментарий, цена, бейдж. Есть 2 кнопки: поделиться и копирования категории + названия. */
 export function ProductDetails({ product }: ProductDetailsProps) {
   const { name, comment, price, category, imageURL, mantineColorBg } = product;
-  const { color, badgeBg, style } = resolveCardColors(mantineColorBg);
+  const { color, style } = resolveCardColors(mantineColorBg);
 
   const [shareNotification, setShareNotification] = useState<ShareNotification | null>(null);
   const notificationTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -40,7 +40,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
       <Tooltip
         label={shareNotification === 'failed' ? texts.linkCopyFailed : texts.linkCopied}
         opened={shareNotification !== null}
-        color="rgba(0, 0, 0, 0.7)"
+        color="gray.8"
         position="left"
       >
         <ActionIcon
@@ -59,21 +59,22 @@ export function ProductDetails({ product }: ProductDetailsProps) {
         <ProductImage src={imageURL} alt={name} />
 
         <Stack gap="sm">
-          <Group gap="xs" align="flex-start" wrap="nowrap">
-            <Title order={1} size={24}>
-              {name}
-            </Title>
+          <Title order={1} size={24}>
+            {name}
 
-            <CopyButton value={`${category} ${name}`}>
-              {({ copied, copy }) => (
-                <Tooltip label={texts.copied} opened={copied} color="rgba(0, 0, 0, 0.7)" position="top-end">
-                  <ActionIcon variant="subtle" size="lg" color={color} aria-label={texts.copyName} onClick={copy}>
-                    {copied ? <Check size={16} /> : <Copy size={16} />}
-                  </ActionIcon>
-                </Tooltip>
-              )}
-            </CopyButton>
-          </Group>
+            <span className={classes.copyGlue}>
+              {' '}
+              <CopyButton value={`${category} ${name}`}>
+                {({ copied, copy }) => (
+                  <Tooltip label={texts.copied} opened={copied} color="gray.8" position="top">
+                    <ActionIcon variant="subtle" size="md" color={color} aria-label={texts.copyName} onClick={copy}>
+                      {copied ? <Check size={14} /> : <Copy size={14} />}
+                    </ActionIcon>
+                  </Tooltip>
+                )}
+              </CopyButton>
+            </span>
+          </Title>
 
           {comment && (
             <Text size="md" c="var(--mantine-color-text)">
@@ -83,7 +84,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
 
           <Group justify="space-between" align="center" mt="auto">
             {price && <Text fw={600}>≈ {price} ₽</Text>}
-            <Badge color={color} fw={600} variant="light" style={badgeBg ? { backgroundColor: badgeBg } : undefined}>
+            <Badge color={color} fw={600} variant="light">
               {category}
             </Badge>
           </Group>
