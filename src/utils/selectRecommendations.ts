@@ -14,7 +14,7 @@ export function selectRecommendations(products: Product[], currentIndex: number,
   // Не играем в литкод, потому что товаров мало
 
   const current = products[currentIndex];
-  
+
   const rotated = [...products.slice(currentIndex + 1), ...products.slice(0, currentIndex)];
 
   const sameCategory = rotated.filter((item) => item.category === current.category);

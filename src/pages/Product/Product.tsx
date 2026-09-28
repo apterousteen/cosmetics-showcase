@@ -46,13 +46,15 @@ export function Product() {
 
   return (
     <div className={loading ? classes.fitViewport : classes.page}>
-      <Text fz={20} fw={700} lh="var(--mantine-h2-line-height)" mb="xs">
-        {texts.productPageTitle}
-      </Text>
+      <header>
+        <Text fz={20} fw={700} lh="var(--mantine-h2-line-height)" mb="xs">
+          {texts.productPageTitle}
+        </Text>
 
-      <Button variant="subtle" leftSection={<ArrowLeft size={16} />} mb="lg" w="fit-content" {...backProps}>
-        {texts.toFullShowcase}
-      </Button>
+        <Button variant="subtle" leftSection={<ArrowLeft size={16} />} mb="lg" w="fit-content" {...backProps}>
+          {texts.toFullShowcase}
+        </Button>
+      </header>
 
       {loading && (
         <div className={classes.cropFade}>
@@ -60,7 +62,7 @@ export function Product() {
         </div>
       )}
       {state.status === 'error' && (
-        <StatusMessage {...texts.error[state.reason]} action={{ label: texts.retry, onClick: retry }} />
+        <StatusMessage {...texts.error[state.reason]} titleOrder={1} action={{ label: texts.retry, onClick: retry }} />
       )}
       {state.status === 'ready' &&
         (product ? (
@@ -69,7 +71,7 @@ export function Product() {
             <Recommendations products={recommendations} />
           </>
         ) : (
-          <StatusMessage {...texts.productNotFound} />
+          <StatusMessage {...texts.productNotFound} titleOrder={1} />
         ))}
 
       {!loading && <Footer />}

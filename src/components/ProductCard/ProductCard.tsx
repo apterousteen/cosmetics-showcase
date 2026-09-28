@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Card, CopyButton, Group, Stack, Text, Tooltip } from '@mantine/core';
+import { ActionIcon, Badge, Card, CopyButton, Flex, Stack, Text, Tooltip } from '@mantine/core';
 import { Check, Copy } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
 import type { Product } from '../../api/types';
@@ -45,7 +45,7 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
       </Card.Section>
 
       <Stack gap="xs" flex={1}>
-        <Text size="lg" fw={600} className={classes.name}>
+        <Text component="h3" size="lg" fw={600} className={classes.name}>
           <Link href={href} state={{ from: location }} onClick={handleNavigate} className={classes.nameLink}>
             {name}
           </Link>
@@ -76,12 +76,18 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
           </Text>
         )}
 
-        <Group justify="space-between" align="center" mt="auto">
+        <Flex
+          mt="auto"
+          gap="xs"
+          direction={compact ? 'column' : 'row'}
+          align={compact ? 'flex-start' : 'center'}
+          justify={compact ? 'flex-start' : 'space-between'}
+        >
           {price && <Text fw={600}>≈ {price} ₽</Text>}
           <Badge color={color} fw={600} variant="light">
             {category}
           </Badge>
-        </Group>
+        </Flex>
       </Stack>
     </Card>
   );

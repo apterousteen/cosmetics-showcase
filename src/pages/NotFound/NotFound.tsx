@@ -9,5 +9,11 @@ export function NotFound() {
 
   useDocumentTitle(texts.notFoundTitle);
 
-  return <StatusMessage {...texts.notFound} action={{ label: texts.toShowcase, onClick: () => navigate('/') }} />;
+  return (
+    <StatusMessage
+      {...texts.notFound}
+      titleOrder={1}
+      action={{ label: texts.toShowcase, onClick: () => navigate('/') }}
+    />
+  );
 }
