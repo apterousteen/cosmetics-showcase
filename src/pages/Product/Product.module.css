@@ -1,6 +1,9 @@
 .page,
 .fitViewport {
-  max-width: 760px;
+  /* Ширина карточки в ряду рекомендаций. Из нее выводится ширина основной карточки на странице товара. */
+  --rec-card-w: 188px;
+
+  max-width: 1440px;
   margin-inline: auto;
   display: flex;
   flex-direction: column;

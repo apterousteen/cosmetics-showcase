@@ -21,7 +21,7 @@
 }
 
 .item {
-  flex: 0 0 188px;
+  flex: 0 0 var(--rec-card-w, 188px);
 
   /* Размеры компактной карточки. Переменные наследуются внутрь ProductCard */
   --card-media-h: 120px;

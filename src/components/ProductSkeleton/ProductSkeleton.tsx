@@ -1,4 +1,5 @@
 import { Card, Group, Skeleton, Stack } from '@mantine/core';
+import { RECOMMENDATIONS_COUNT } from '../../constants/config';
 import { CardSkeleton } from '../CardSkeleton/CardSkeleton';
 import classes from '../ProductDetails/ProductDetails.module.css';
 import rowClasses from '../Recommendations/Recommendations.module.css';
@@ -28,7 +29,7 @@ export function ProductSkeleton() {
         <Skeleton height={22} width={160} mb="sm" />
 
         <div className={`${rowClasses.row} ${rowClasses.cropFade}`}>
-          {Array.from({ length: 4 }, (_, index) => index).map((index) => (
+          {Array.from({ length: RECOMMENDATIONS_COUNT }, (_, index) => index).map((index) => (
             <div className={rowClasses.item} key={index}>
               <CardSkeleton compact />
             </div>

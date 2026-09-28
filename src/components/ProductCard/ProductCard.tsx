@@ -40,7 +40,7 @@ export function ProductCard({ product, compact = false }: ProductCardProps) {
           tabIndex={-1}
           aria-hidden="true"
         >
-          <ProductImage src={imageURL} alt="" />
+          <ProductImage src={imageURL} alt="" compact={compact} />
         </Link>
       </Card.Section>
 

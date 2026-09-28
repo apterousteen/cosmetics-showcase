@@ -7,6 +7,9 @@ export const SHEET_NAME = 'rawData';
 /** gviz-эндпоинт листа в формате CSV. */
 export const CSV_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_NAME)}`;
 
+/** Сколько товаров в ряду рекомендаций — и столько же заглушек на время загрузки. */
+export const RECOMMENDATIONS_COUNT = 8;
+
 /** Колонки сетки по брейкпоинтам */
 export const GRID_COLS = { base: 1, sm: 2, lg: 4 };
 

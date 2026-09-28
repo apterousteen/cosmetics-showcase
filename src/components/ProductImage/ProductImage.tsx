@@ -7,12 +7,13 @@ import classes from './ProductImage.module.css';
 type ProductImageProps = {
   src: string;
   alt: string;
+  compact?: boolean;
 };
 
 type ImageStatus = 'loading' | 'loaded' | 'broken';
 
 /** Фото товара. Битая или долго грузящаяся картинка заменяется пастельной плашкой-фолбеком. */
-export function ProductImage({ src, alt }: ProductImageProps) {
+export function ProductImage({ src, alt, compact = false }: ProductImageProps) {
   const [status, setStatus] = useState<ImageStatus>('loading');
   const showImage = src !== '' && status !== 'broken';
 
@@ -35,7 +36,10 @@ export function ProductImage({ src, alt }: ProductImageProps) {
         />
       ) : (
         <Center className={classes.fallback}>
-          <Text>{texts.imageFallback}</Text>
+          {/* На миниатюре убираем перенос. */}
+          <Text size={compact ? 'xs' : 'md'}>
+            {compact ? texts.imageFallback.replace('\n', ' ') : texts.imageFallback}
+          </Text>
         </Center>
       )}
     </div>

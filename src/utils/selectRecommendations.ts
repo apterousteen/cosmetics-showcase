@@ -1,4 +1,5 @@
 import type { Product } from '../api/types';
+import { RECOMMENDATIONS_COUNT } from '../constants/config';
 
 /**
  * Подбирает товары для ряда рекомендаций под карточкой.
@@ -10,7 +11,11 @@ import type { Product } from '../api/types';
  * @param limit - сколько карточек нужно
  * @returns список из `limit` товаров, если каталог меньше, то столько, сколько наберется
  */
-export function selectRecommendations(products: Product[], currentIndex: number, limit = 8): Product[] {
+export function selectRecommendations(
+  products: Product[],
+  currentIndex: number,
+  limit = RECOMMENDATIONS_COUNT,
+): Product[] {
   // Не играем в литкод, потому что товаров мало
 
   const current = products[currentIndex];

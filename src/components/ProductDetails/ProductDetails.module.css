@@ -5,6 +5,7 @@
   /* Своего отступа вокруг медиа не нужно: его уже даёт padding карточки. */
   --card-media-p: 0;
 
+  max-width: calc(4 * var(--rec-card-w, 188px) + 3 * var(--mantine-spacing-xs));
   position: relative;
   border-radius: var(--mantine-radius-xl);
   padding: var(--mantine-spacing-lg);
