@@ -2,6 +2,7 @@ import { Text, Title } from '@mantine/core';
 import { type ReactNode, useLayoutEffect } from 'react';
 import { CardsGrid } from '../../components/CardsGrid/CardsGrid';
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter';
+import { Footer } from '../../components/Footer/Footer';
 import { LoadingSkeleton } from '../../components/LoadingSkeleton/LoadingSkeleton';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { ScrollTopButton } from '../../components/ScrollTopButton/ScrollTopButton';
@@ -74,11 +75,7 @@ export function Showcase() {
       </Title>
       <Text mb="lg">{texts.subtitle}</Text>
       {loading ? <div className={classes.cropFade}>{content}</div> : content}
-      {!loading && (
-        <Text component="footer" c="dimmed" size="sm" ta="center" className={classes.footer} pt="md">
-          {texts.footer}
-        </Text>
-      )}
+      {!loading && <Footer />}
       <ScrollTopButton />
     </div>
   );

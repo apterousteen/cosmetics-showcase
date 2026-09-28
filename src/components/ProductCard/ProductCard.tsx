@@ -10,6 +10,7 @@ import classes from './ProductCard.module.css';
 
 type ProductCardProps = {
   product: Product;
+  compact?: boolean;
 };
 
 /**
@@ -17,7 +18,7 @@ type ProductCardProps = {
  *
  * Ссылок две (фото и название), а не оверлей на всю карточку, чтобы не ломать выделение текста.
  */
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, compact = false }: ProductCardProps) {
   const { id, name, comment, price, category, imageURL, mantineColorBg } = product;
   const { color, style } = resolveCardColors(mantineColorBg);
   const [location] = useLocation();
@@ -69,7 +70,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </span>
         </Text>
 
-        {comment && (
+        {!compact && comment && (
           <Text size="md" c="var(--mantine-color-text)" className={classes.comment}>
             {comment}
           </Text>

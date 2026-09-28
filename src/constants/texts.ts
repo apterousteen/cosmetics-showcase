@@ -47,6 +47,7 @@ export const texts = {
     title: 'Такого товара нет',
     description: 'Ссылка битая или товар убрали из витрины',
   },
+  recommendations: 'Ещё с витрины',
   toShowcase: 'К витрине',
   toFullShowcase: 'К полной витрине',
   dataUpdated: 'Данные обновились',

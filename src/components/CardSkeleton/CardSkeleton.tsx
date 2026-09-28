@@ -1,8 +1,12 @@
 import { Card, Group, Skeleton, Stack } from '@mantine/core';
 import classes from './CardSkeleton.module.css';
 
+type CardSkeletonProps = {
+  compact?: boolean;
+};
+
 /** Заглушка карточки товара. Повторяет пропорции настоящей карточки, чтобы её появление не сдвигало макет. */
-export function CardSkeleton() {
+export function CardSkeleton({ compact = false }: CardSkeletonProps) {
   return (
     <Card withBorder className={classes.card}>
       {/* Та же переменная, что в ProductImage — её переопределят снаружи. */}
@@ -10,7 +14,7 @@ export function CardSkeleton() {
 
       <Stack gap="xs" flex={1}>
         <Skeleton height={18} width="70%" />
-        <Skeleton height={14} />
+        {!compact && <Skeleton height={14} />}
         <Group justify="space-between" align="center" mt="auto">
           <Skeleton height={18} width={50} />
           <Skeleton height={22} width={70} radius="xl" />

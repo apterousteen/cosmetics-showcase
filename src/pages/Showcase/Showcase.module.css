@@ -6,21 +6,16 @@
   min-height: calc(100dvh - 2 * var(--mantine-spacing-lg));
 }
 
-/* Загрузка: фиксируем высоту (а не min), чтобы cropFade обрезал лишние ряды. */
+/* Загрузка: высота фиксированная, иначе cropFade нечего обрезать. */
 .fitViewport {
   display: flex;
   flex-direction: column;
   height: calc(100dvh - 2 * var(--mantine-spacing-lg));
 }
 
-/* Прибивает футер к низу. */
-.footer {
-  margin-top: auto;
-}
-
 .cropFade {
   flex: 1;
   min-height: 0; /* иначе flex не даёт overflow сжать контент */
   overflow: hidden;
-  mask-image: linear-gradient(to bottom, black calc(100% - 120px), transparent);
+  mask-image: linear-gradient(to bottom, black calc(100% - 80px), transparent);
 }

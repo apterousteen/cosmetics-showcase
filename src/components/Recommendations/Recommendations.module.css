@@ -1,0 +1,29 @@
+.section {
+  margin-top: var(--mantine-spacing-xl);
+}
+
+.row {
+  margin: 0;
+  padding: 0;
+  list-style-type: "";
+  display: flex;
+  gap: var(--mantine-spacing-xs);
+  overflow-x: auto;
+  /* Чтобы горизонтальный свайп не сработал как «назад» в браузере. */
+  overscroll-behavior-x: contain;
+  padding-bottom: var(--mantine-spacing-sm);
+}
+
+/* То же, что на витрине: заглушка растворяется у правого края вместо скролла. */
+.cropFade {
+  overflow-x: hidden;
+  mask-image: linear-gradient(to right, black calc(100% - 80px), transparent);
+}
+
+.item {
+  flex: 0 0 188px;
+
+  /* Размеры компактной карточки. Переменные наследуются внутрь ProductCard */
+  --card-media-h: 120px;
+  --card-name-lines: 2;
+}
