@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "postbuild": "node scripts/copy-404.mjs",
     "lint": "biome lint",
     "format": "biome format --write",
     "check": "biome check --write",
@@ -18,7 +19,8 @@
     "papaparse": "^5.5.3",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "tslib": "^2.8.1"
+    "tslib": "^2.8.1",
+    "wouter": "^3.10.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.0",

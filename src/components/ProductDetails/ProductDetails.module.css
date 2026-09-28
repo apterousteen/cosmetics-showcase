@@ -1,0 +1,54 @@
+.card,
+.skeletonCard {
+  /* Размеры медиа читает ProductImage; на странице товара фото крупнее, чем в карточке витрины. */
+  --card-media-h: 240px;
+  /* Своего отступа вокруг медиа не нужно: его уже даёт padding карточки. */
+  --card-media-p: 0;
+
+  max-width: calc(4 * var(--rec-card-w, 188px) + 3 * var(--mantine-spacing-xs));
+  position: relative;
+  border-radius: var(--mantine-radius-xl);
+  padding: var(--mantine-spacing-lg);
+}
+
+.card {
+  /* Дефолты гаммы (pink); resolveCardColors переопределяет их inline-стилем. */
+  --card-bg: var(--mantine-color-pink-0);
+  --card-shade: var(--mantine-color-pink-1);
+  --card-text: var(--mantine-color-pink-9);
+
+  /* Серый особый: -light почти белый и сливается с фоном карточки, поэтому внутри неё он темнее. */
+  --mantine-color-gray-light: var(--mantine-color-gray-3);
+  --mantine-color-gray-light-hover: var(--mantine-color-gray-4);
+
+  background-color: var(--card-bg);
+  border-color: var(--card-shade);
+  color: var(--card-text);
+}
+
+.layout {
+  display: grid;
+  gap: var(--mantine-spacing-md);
+}
+
+/* 48em — брейкпоинт sm в Mantine; $mantine-breakpoint-sm не проходит парсер Biome. */
+@media (min-width: 48em) {
+  .layout {
+    grid-template-columns: var(--card-media-h) minmax(0, 1fr);
+    align-items: center;
+  }
+}
+
+.mediaSkeleton {
+  height: var(--card-media-h);
+}
+
+.share {
+  position: absolute;
+  right: var(--mantine-spacing-lg);
+}
+
+/* Пробел и кнопка неразрывны, иначе иконка остаётся на строке одна. */
+.copyGlue {
+  white-space: nowrap;
+}

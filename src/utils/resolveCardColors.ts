@@ -14,11 +14,10 @@ const VALID_COLORS = new Set(Object.keys(DEFAULT_THEME.colors));
  * Частный случай — gray: его шкала сдвинута глубже.
  *
  * @param mantineColorBg - имя Mantine-цвета из таблицы
- * @returns color — имя цвета (для Badge); badgeBg — фон бейджа для gray; style — CSS-переменные для .card
+ * @returns color — имя цвета (для Badge и кнопок); style — CSS-переменные для .card
  */
 export function resolveCardColors(mantineColorBg: string): {
   color: string;
-  badgeBg?: string;
   style: CSSProperties;
 } {
   const requested = mantineColorBg || DEFAULT_COLOR;
@@ -30,8 +29,6 @@ export function resolveCardColors(mantineColorBg: string): {
 
   return {
     color,
-    // У gray variant="light" бейджа почти белый — задаём фон глубже (-3).
-    badgeBg: isGray ? `var(--mantine-color-${color}-3)` : undefined,
     style: {
       '--card-bg': `var(--mantine-color-${color}-${bg})`,
       '--card-shade': `var(--mantine-color-${color}-${shade})`,

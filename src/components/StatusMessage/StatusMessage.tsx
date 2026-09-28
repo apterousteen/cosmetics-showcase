@@ -7,14 +7,16 @@ type StatusMessageProps = {
   action?: { label: string; onClick: () => void };
   /** Ссылка-контакт (например на tg разработчика). */
   contact?: { label: string; href: string };
+  /** Уровень заголовка: 1, если сообщение заменяет собой содержимое страницы. */
+  titleOrder?: 1 | 2;
 };
 
 /** Универсальный центрированный компонент-сообщение: ошибка / нет данных / пустой фильтр. */
-export function StatusMessage({ title, description, action, contact }: StatusMessageProps) {
+export function StatusMessage({ title, description, action, contact, titleOrder = 2 }: StatusMessageProps) {
   return (
     <Center mih={240}>
       <Stack align="center" gap="xs">
-        <Title order={3} ta="center">
+        <Title order={titleOrder} size="h3" ta="center">
           {title}
         </Title>
         {description && (

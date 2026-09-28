@@ -1,28 +1,37 @@
 import { Text, Title } from '@mantine/core';
-import type { ReactNode } from 'react';
-import type { Product } from '../../api/types';
+import { type ReactNode, useLayoutEffect } from 'react';
 import { CardsGrid } from '../../components/CardsGrid/CardsGrid';
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter';
+import { Footer } from '../../components/Footer/Footer';
 import { LoadingSkeleton } from '../../components/LoadingSkeleton/LoadingSkeleton';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { ScrollTopButton } from '../../components/ScrollTopButton/ScrollTopButton';
 import { StatusMessage } from '../../components/StatusMessage/StatusMessage';
 import { texts } from '../../constants/texts';
-import { useCategoryFilter } from '../../hooks/useCategoryFilter';
-import { useProducts } from '../../hooks/useProducts';
+import { useCatalog } from '../../context/CatalogContext';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import { forgetAnchor, getHistoryState } from '../../utils/history';
 import classes from './Showcase.module.css';
 
-// Стабильная ссылка, чтобы useMemo в useCategoryFilter не пересчитывался
-const NO_PRODUCTS: Product[] = [];
-
-/**
- * Главный экран: шапка + контент по состоянию
- * (загрузка / ошибка / нет данных / список товаров).
- */
+/** Страница витрины: список товаров с фильтром по категориям. */
 export function Showcase() {
-  const { state, retry } = useProducts();
-  const products = state.status === 'ready' ? state.products : NO_PRODUCTS;
-  const { categories, selected, setSelected, filtered } = useCategoryFilter(products);
+  const { state, retry, products, categories, selected, setSelected, filteredProducts } = useCatalog();
+
+  useDocumentTitle(texts.siteTitle);
+
+  // Зависимость только от статуса загрузки, а не от списка товаров, иначе фоновое обновление дёргало бы прокрутку.
+  useLayoutEffect(() => {
+    if (state.status !== 'ready') return;
+
+    const { anchorId } = getHistoryState();
+    if (anchorId === null) return;
+
+    const card = document.querySelector(`[data-product-id="${CSS.escape(anchorId)}"]`);
+    if (card === null) return;
+
+    card.scrollIntoView({ block: 'center' });
+    forgetAnchor();
+  }, [state.status]);
 
   const loading = state.status === 'loading';
   let content: ReactNode;
@@ -30,12 +39,7 @@ export function Showcase() {
   if (state.status === 'loading') {
     content = <LoadingSkeleton />;
   } else if (state.status === 'error') {
-    content = (
-      <StatusMessage
-        {...texts.error[state.reason]}
-        action={{ label: texts.retry, onClick: retry }}
-      />
-    );
+    content = <StatusMessage {...texts.error[state.reason]} action={{ label: texts.retry, onClick: retry }} />;
   } else if (products.length === 0) {
     content = <StatusMessage {...texts.noData} />;
   } else {
@@ -44,11 +48,11 @@ export function Showcase() {
       <>
         <CategoryFilter categories={categories} value={selected} onChange={setSelected} />
         <Text size="sm" mb="lg">
-          {texts.counter(filtered.length, products.length)}
+          {texts.counter(filteredProducts.length, products.length)}
         </Text>
-        {filtered.length > 0 ? (
+        {filteredProducts.length > 0 ? (
           <CardsGrid>
-            {filtered.map((product) => (
+            {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </CardsGrid>
@@ -71,18 +75,7 @@ export function Showcase() {
       </Title>
       <Text mb="lg">{texts.subtitle}</Text>
       {loading ? <div className={classes.cropFade}>{content}</div> : content}
-      {!loading && (
-        <Text
-          component="footer"
-          c="dimmed"
-          size="sm"
-          ta="center"
-          className={classes.footer}
-          pt="md"
-        >
-          {texts.footer}
-        </Text>
-      )}
+      {!loading && <Footer />}
       <ScrollTopButton />
     </div>
   );

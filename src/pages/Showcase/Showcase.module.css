@@ -3,24 +3,19 @@
 .page {
   display: flex;
   flex-direction: column;
-  min-block-size: calc(100dvh - 2 * var(--mantine-spacing-lg));
+  min-height: calc(100dvh - 2 * var(--mantine-spacing-lg));
 }
 
-/* Загрузка: фиксируем высоту (а не min), чтобы cropFade обрезал лишние ряды. */
+/* Загрузка: высота фиксированная, иначе cropFade нечего обрезать. */
 .fitViewport {
   display: flex;
   flex-direction: column;
-  block-size: calc(100dvh - 2 * var(--mantine-spacing-lg));
-}
-
-/* Прибивает футер к низу. */
-.footer {
-  margin-block-start: auto;
+  height: calc(100dvh - 2 * var(--mantine-spacing-lg));
 }
 
 .cropFade {
   flex: 1;
-  min-block-size: 0; /* иначе flex не даёт overflow сжать контент */
+  min-height: 0; /* иначе flex не даёт overflow сжать контент */
   overflow: hidden;
-  mask-image: linear-gradient(to bottom, black calc(100% - 120px), transparent);
+  mask-image: linear-gradient(to bottom, black calc(100% - 80px), transparent);
 }

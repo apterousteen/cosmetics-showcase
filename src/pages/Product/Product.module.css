@@ -1,0 +1,27 @@
+.page,
+.fitViewport {
+  /* Ширина карточки в ряду рекомендаций. Из нее выводится ширина основной карточки на странице товара. */
+  --rec-card-w: 188px;
+
+  max-width: 1440px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.page {
+  min-height: calc(100dvh - 2 * var(--mantine-spacing-lg));
+}
+
+/* Загрузка: высота фиксированная, иначе cropFade нечего обрезать. */
+.fitViewport {
+  height: calc(100dvh - 2 * var(--mantine-spacing-lg));
+}
+
+/* То же, что на витрине: заглушка растворяется у нижнего края вместо скролла. */
+.cropFade {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, black calc(100% - 80px), transparent);
+}

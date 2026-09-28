@@ -1,86 +1,93 @@
-import { Badge, Card, Center, CopyButton, Group, Stack, Text, Tooltip } from '@mantine/core';
-import { useEffect, useState } from 'react';
+import { ActionIcon, Badge, Card, CopyButton, Flex, Stack, Text, Tooltip } from '@mantine/core';
+import { Check, Copy } from 'lucide-react';
+import { Link, useLocation } from 'wouter';
 import type { Product } from '../../api/types';
-import { IMAGE_TIMEOUT_MS } from '../../constants/config';
 import { texts } from '../../constants/texts';
+import { rememberAnchor } from '../../utils/history';
 import { resolveCardColors } from '../../utils/resolveCardColors';
+import { ProductImage } from '../ProductImage/ProductImage';
 import classes from './ProductCard.module.css';
 
 type ProductCardProps = {
   product: Product;
+  compact?: boolean;
 };
-
-type ImageStatus = 'loading' | 'loaded' | 'broken';
 
 /**
  * Карточка товара: фото, название, комментарий, цена, бейдж.
  *
- * - Битая картинка заменяется пастельной плашкой-фолбеком.
- * - Нажатие названия копирует категорию и название.
+ * Ссылок две (фото и название), а не оверлей на всю карточку, чтобы не ломать выделение текста.
  */
-export function ProductCard({ product }: ProductCardProps) {
-  const { name, comment, price, category, imageURL, mantineColorBg } = product;
-  const { color, badgeBg, style } = resolveCardColors(mantineColorBg);
-  // Картинки часто не отдаются (российские CDN + VPN)
-  // битые/висящие картинки → фолбек (onError + таймаут)
-  const [imageStatus, setImageStatus] = useState<ImageStatus>('loading');
-  const showImage = imageURL !== '' && imageStatus !== 'broken';
+export function ProductCard({ product, compact = false }: ProductCardProps) {
+  const { id, name, comment, price, category, imageURL, mantineColorBg } = product;
+  const { color, style } = resolveCardColors(mantineColorBg);
+  const [location] = useLocation();
 
-  useEffect(() => {
-    if (!showImage || imageStatus === 'loaded') return;
-    const id = setTimeout(() => setImageStatus('broken'), IMAGE_TIMEOUT_MS);
-    return () => clearTimeout(id);
-  }, [showImage, imageStatus]);
+  const href = `/product/${encodeURIComponent(id)}`;
+
+  function handleNavigate() {
+    rememberAnchor(id);
+  }
 
   return (
-    <Card withBorder className={classes.card} style={style}>
-      <Card.Section className={classes.imageWrapper}>
-        {showImage ? (
-          <img
-            src={imageURL}
-            alt={name}
-            className={classes.image}
-            onLoad={() => setImageStatus('loaded')}
-            onError={() => setImageStatus('broken')}
-          />
-        ) : (
-          <Center className={classes.imageFallback}>
-            <Text>{texts.imageFallback}</Text>
-          </Center>
-        )}
+    <Card withBorder className={classes.card} style={style} data-product-id={id}>
+      <Card.Section>
+        <Link
+          href={href}
+          state={{ from: location }}
+          onClick={handleNavigate}
+          className={classes.imageLink}
+          tabIndex={-1}
+          aria-hidden="true"
+        >
+          <ProductImage src={imageURL} alt="" compact={compact} />
+        </Link>
       </Card.Section>
 
       <Stack gap="xs" flex={1}>
-        <CopyButton value={`${category} ${name}`}>
-          {({ copied, copy }) => (
-            <Tooltip
-              position="top-start"
-              color="rgba(0, 0, 0, 0.7)"
-              label={texts.copied}
-              opened={copied}
-            >
-              <Text size="lg" fw={600} lineClamp={3} style={{ cursor: 'pointer' }} onClick={copy}>
-                {name}
-              </Text>
-            </Tooltip>
-          )}
-        </CopyButton>
-        {comment && (
-          <Text size="md" c="dimmed" lineClamp={5}>
+        <Text component="h3" size="lg" fw={600} className={classes.name}>
+          <Link href={href} state={{ from: location }} onClick={handleNavigate} className={classes.nameLink}>
+            {name}
+          </Link>
+
+          <span className={classes.copyGlue}>
+            {' '}
+            <CopyButton value={`${category} ${name}`}>
+              {({ copied, copy }) => (
+                <Tooltip position="top" color="gray.8" label={texts.copied} opened={copied}>
+                  <ActionIcon
+                    variant="subtle"
+                    size="md"
+                    color={color}
+                    aria-label={texts.copyNameOf(category, name)}
+                    onClick={copy}
+                  >
+                    {copied ? <Check size={14} /> : <Copy size={14} />}
+                  </ActionIcon>
+                </Tooltip>
+              )}
+            </CopyButton>
+          </span>
+        </Text>
+
+        {!compact && comment && (
+          <Text size="md" c="var(--mantine-color-text)" className={classes.comment}>
             {comment}
           </Text>
         )}
-        <Group justify="space-between" align="center" mt="auto">
+
+        <Flex
+          mt="auto"
+          gap="xs"
+          direction={compact ? 'column' : 'row'}
+          align={compact ? 'flex-start' : 'center'}
+          justify={compact ? 'flex-start' : 'space-between'}
+        >
           {price && <Text fw={600}>≈ {price} ₽</Text>}
-          <Badge
-            color={color}
-            fw={600}
-            variant="light"
-            style={badgeBg ? { backgroundColor: badgeBg } : undefined}
-          >
+          <Badge color={color} fw={600} variant="light">
             {category}
           </Badge>
-        </Group>
+        </Flex>
       </Stack>
     </Card>
   );
